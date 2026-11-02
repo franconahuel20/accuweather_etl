@@ -1,0 +1,48 @@
+version: 2
+
+seeds:
+  - name: location_data
+    description: >
+      LOCATION_DATA from accuweather.sql: the cities requested to AccuWeather. Only rows with
+      ACTIVE_BIT = TRUE are requested; UTC_INT groups the cities as the original Lambda did.
+      Data fix: Brasília had CITY_FOLDER_STR = rio_de_janeiro in the source, so its files overwrote
+      Rio de Janeiro's in object storage; it is now `brasilia` and a test keeps folders unique.
+    config:
+      column_types:
+        country_iso_alpha_2_str: varchar(2)
+        country_iso_alpha_3_str: varchar(3)
+        country_name_str: varchar(100)
+        city_name_str: varchar(100)
+        city_accuweather_id_str: varchar(20)
+        tz_str: varchar(40)
+        utc_int: numeric(2,0)
+        latitude_flt: double precision
+        longitude_flt: double precision
+        city_folder_str: varchar(100)
+        active_bit: boolean
+    columns:
+      - name: country_iso_alpha_2_str
+        description: ISO 3166-1 alpha-2 country code.
+        data_tests: [not_null]
+      - name: country_iso_alpha_3_str
+        description: ISO 3166-1 alpha-3 country code (part of the primary key).
+        data_tests: [not_null]
+      - name: country_name_str
+      - name: city_name_str
+        data_tests: [not_null]
+      - name: city_accuweather_id_str
+        description: AccuWeather location key (part of the primary key).
+        data_tests: [not_null, unique]
+      - name: tz_str
+        description: IANA time zone used to name the daily file after the local date.
+        data_tests: [not_null]
+      - name: utc_int
+      - name: latitude_flt
+        data_tests: [not_null]
+      - name: longitude_flt
+        data_tests: [not_null]
+      - name: city_folder_str
+        description: Folder of the city in object storage; must be unique or files overwrite each other.
+        data_tests: [not_null, unique]
+      - name: active_bit
+        data_tests: [not_null]

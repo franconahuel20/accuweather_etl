@@ -1,0 +1,13 @@
+accuweather:
+  target: docker
+  outputs:
+    docker:
+      type: postgres
+      host: "{{ env_var('WAREHOUSE_HOST', 'localhost') }}"
+      port: "{{ env_var('WAREHOUSE_PORT', '5432') | as_number }}"
+      user: "{{ env_var('WAREHOUSE_USER', 'etl') }}"
+      password: "{{ env_var('WAREHOUSE_PASSWORD', '') }}"
+      dbname: "{{ env_var('WAREHOUSE_DB', 'weather') }}"
+      schema: stg_accuweather
+      threads: 4
+      connect_timeout: 30

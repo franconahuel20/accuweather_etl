@@ -1,0 +1,37 @@
+slice_name: Weekly average temperature by country
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_line
+params:
+  datasource: 3__table
+  viz_type: echarts_timeseries_line
+  adhoc_filters: []
+  time_range: No filter
+  x_axis: local_date
+  time_grain_sqla: P1W
+  metrics:
+  - expressionType: SQL
+    sqlExpression: ROUND(AVG(temp_avg_c), 1)
+    label: "Avg temperature (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_9bf9d74876bf
+  groupby:
+  - country
+  row_limit: 10000
+  show_legend: true
+  legendOrientation: top
+  rich_tooltip: true
+  y_axis_format: .1f
+  x_axis_time_format: smart_date
+  markerEnabled: false
+  zoomable: true
+  color_scheme: supersetColors
+  truncateYAxis: true
+  resample_rule: 7D
+  resample_method: asfreq
+query_context: null
+cache_timeout: null
+uuid: 903c6857-2712-47ca-b8e8-b91c5dabbed8
+version: 1.0.0
+dataset_uuid: 855c0677-1aee-4003-bdf6-545842c988fb

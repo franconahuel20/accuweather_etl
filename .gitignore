@@ -1,0 +1,47 @@
+# Secrets
+.env
+.env.*
+!.env.example
+api_key.txt
+*.pem
+*.key
+
+# Data: raw exports and local copies never go to Git (the historical export alone is 1.3 GB)
+data/*
+!data/historical/
+data/historical/*
+!data/historical/.gitkeep
+*.csv
+!dbt/seeds/*.csv
+*.parquet
+*.zip
+!superset/dashboards/*.zip
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+logs/
+.user.yml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Dagster local state
+dagster_home/
+.tmp_dagster_home*/
+.dagster/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

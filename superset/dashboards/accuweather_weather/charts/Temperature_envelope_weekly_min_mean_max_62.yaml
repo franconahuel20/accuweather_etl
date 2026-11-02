@@ -1,0 +1,46 @@
+slice_name: "Temperature envelope \xB7 weekly min / mean / max"
+description: Pick a city or country in the filters to see its own range.
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_line
+params:
+  datasource: 3__table
+  viz_type: echarts_timeseries_line
+  adhoc_filters: []
+  time_range: No filter
+  x_axis: local_date
+  time_grain_sqla: P1W
+  metrics:
+  - expressionType: SQL
+    sqlExpression: MIN(temp_min_c)
+    label: "Minimum (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_06527707ef62
+  - expressionType: SQL
+    sqlExpression: ROUND(AVG(temp_avg_c), 1)
+    label: "Mean (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_0fede22c88fe
+  - expressionType: SQL
+    sqlExpression: MAX(temp_max_c)
+    label: "Maximum (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_1c519da7b393
+  groupby: []
+  row_limit: 10000
+  show_legend: true
+  legendOrientation: top
+  rich_tooltip: true
+  y_axis_format: .1f
+  x_axis_time_format: smart_date
+  markerEnabled: false
+  zoomable: true
+  color_scheme: supersetColors
+  truncateYAxis: true
+  resample_rule: 7D
+  resample_method: asfreq
+query_context: null
+cache_timeout: null
+uuid: 5a27795c-da05-435c-a137-1a012a76845f
+version: 1.0.0
+dataset_uuid: 855c0677-1aee-4003-bdf6-545842c988fb

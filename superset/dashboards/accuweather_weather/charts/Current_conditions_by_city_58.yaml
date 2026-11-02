@@ -1,0 +1,83 @@
+slice_name: Current conditions by city
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 2__table
+  viz_type: table
+  adhoc_filters: []
+  time_range: No filter
+  query_mode: aggregate
+  groupby:
+  - city_label
+  - weather_text
+  - observed_at_local
+  metrics:
+  - expressionType: SQL
+    sqlExpression: MAX(temp_c)
+    label: "Temp (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_428e2f7472f9
+  - expressionType: SQL
+    sqlExpression: MAX(real_feel_temp_c)
+    label: "RealFeel (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_9b8c45781776
+  - expressionType: SQL
+    sqlExpression: MAX(temp_min_24h_c)
+    label: "24h min (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_7eb25e6b6dc6
+  - expressionType: SQL
+    sqlExpression: MAX(temp_max_24h_c)
+    label: "24h max (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_d84e491527e4
+  - expressionType: SQL
+    sqlExpression: MAX(relative_humidity)
+    label: Humidity (%)
+    hasCustomLabel: true
+    optionName: metric_98ffd39d66c3
+  - expressionType: SQL
+    sqlExpression: MAX(wind_speed_kmh)
+    label: Wind (km/h)
+    hasCustomLabel: true
+    optionName: metric_c58fad6f1ab1
+  - expressionType: SQL
+    sqlExpression: MAX(uv_index)
+    label: UV index
+    hasCustomLabel: true
+    optionName: metric_5773c58032e7
+  - expressionType: SQL
+    sqlExpression: MAX(precipitation_24h_mm)
+    label: Rain 24h (mm)
+    hasCustomLabel: true
+    optionName: metric_ac2bd9b3ba09
+  timeseries_limit_metric:
+    expressionType: SQL
+    sqlExpression: MAX(temp_c)
+    label: "Temp (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_e4887865c5ad
+  order_desc: true
+  row_limit: 100
+  server_page_length: 20
+  include_search: true
+  show_cell_bars: false
+  table_timestamp_format: '%Y-%m-%d %H:%M'
+  color_pn: false
+  column_config:
+    "Temp (\xB0C)":
+      d3NumberFormat: .1f
+    "RealFeel (\xB0C)":
+      d3NumberFormat: .1f
+    "24h min (\xB0C)":
+      d3NumberFormat: .1f
+    "24h max (\xB0C)":
+      d3NumberFormat: .1f
+query_context: null
+cache_timeout: null
+uuid: b8fd80f6-cbe3-442c-ace3-d65e18503231
+version: 1.0.0
+dataset_uuid: 1d27cc25-fb58-43bd-acf2-c57013a712f6

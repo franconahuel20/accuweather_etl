@@ -1,0 +1,14 @@
+database_name: Weather Warehouse (PostgreSQL)
+sqlalchemy_uri: postgresql+psycopg2://bi_reader:XXXXXXXXXX@postgres:5432/weather
+cache_timeout: null
+expose_in_sqllab: true
+allow_run_async: false
+allow_ctas: false
+allow_cvas: false
+allow_dml: false
+allow_file_upload: false
+extra:
+  allows_virtual_table_explore: true
+impersonate_user: false
+uuid: df8db32d-2ac6-4ed1-84be-f21d72829f54
+version: 1.0.0

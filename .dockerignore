@@ -1,0 +1,24 @@
+# Keep the build context small and free of secrets/data.
+.env
+.env.*
+!.env.example
+api_key.txt
+.git
+.gitignore
+.gitattributes
+data/
+**/*.csv
+!dbt/seeds/*.csv
+**/__pycache__/
+**/*.py[cod]
+.venv/
+venv/
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+logs/
+docs/
+*.md
+LICENSE
+.vscode/
+.idea/

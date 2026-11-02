@@ -1,0 +1,32 @@
+name: accuweather
+version: "1.0.0"
+config-version: 2
+profile: accuweather
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+flags:
+  send_anonymous_usage_stats: false
+
+seeds:
+  accuweather:
+    +schema: stg_accuweather
+    +quote_columns: false
+    location_data:
+      # PK_CITIES of accuweather.sql, enforced by PostgreSQL (hooks here are rendered at run time).
+      +post-hook:
+        - "alter table {{ this }} drop constraint if exists pk_cities"
+        - "alter table {{ this }} add constraint pk_cities primary key (country_iso_alpha_3_str, city_accuweather_id_str)"
+
+models:
+  accuweather:
+    warehouse:
+      +schema: stg_accuweather
+    marts:
+      +schema: analytics
+      +materialized: table

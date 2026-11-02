@@ -1,0 +1,591 @@
+dashboard_title: "AccuWeather \xB7 Global Weather Monitor"
+description: null
+css: ''
+slug: accuweather-weather
+certified_by: null
+certification_details: null
+published: true
+uuid: 35a698d7-5d15-4cd7-8cd0-98943a4b1406
+position:
+  DASHBOARD_VERSION_KEY: v2
+  ROOT_ID:
+    type: ROOT
+    id: ROOT_ID
+    children:
+    - TABS-main
+  GRID_ID:
+    type: GRID
+    id: GRID_ID
+    children: []
+    parents:
+    - ROOT_ID
+  HEADER_ID:
+    type: HEADER
+    id: HEADER_ID
+    meta:
+      text: "AccuWeather \xB7 Global Weather Monitor"
+  TABS-main:
+    type: TABS
+    id: TABS-main
+    children:
+    - TAB-now
+    - TAB-trends
+    parents:
+    - ROOT_ID
+  TAB-now:
+    type: TAB
+    id: TAB-now
+    children:
+    - ROW-now-0
+    - ROW-now-1
+    - ROW-now-2
+    - ROW-now-3
+    - ROW-now-4
+    parents:
+    - ROOT_ID
+    - TABS-main
+    meta:
+      text: Current conditions
+      defaultText: Tab title
+      placeholder: Tab title
+  ROW-now-0:
+    type: ROW
+    id: ROW-now-0
+    children:
+    - MARKDOWN-now
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  MARKDOWN-now:
+    type: MARKDOWN
+    id: MARKDOWN-now
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-0
+    meta:
+      width: 12
+      height: 18
+      code: "### Current weather across the monitored cities\nLatest AccuWeather observation\
+        \ of every active city in `location_data`. Data lands daily at **08:30 UTC**\n\
+        (AccuWeather API \u2192 MinIO \u2192 PostgreSQL \u2192 dbt), orchestrated\
+        \ by Dagster. Use the **Country** and **City**\nfilters on the left; maps\
+        \ and tables react to them.\n"
+  ROW-now-1:
+    type: ROW
+    id: ROW-now-1
+    children:
+    - CHART-3416ae89
+    - CHART-b2860876
+    - CHART-79af38d5
+    - CHART-de6c9ffb
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-3416ae89:
+    type: CHART
+    id: CHART-3416ae89
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-1
+    meta:
+      chartId: 52
+      uuid: 3416ae89-55a4-4bc4-95c6-3d7c3cc13aad
+      width: 3
+      height: 28
+      sliceName: Cities monitored
+  CHART-b2860876:
+    type: CHART
+    id: CHART-b2860876
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-1
+    meta:
+      chartId: 53
+      uuid: b2860876-5814-4bbf-a497-17cfa04b0311
+      width: 3
+      height: 28
+      sliceName: Average temperature now
+  CHART-79af38d5:
+    type: CHART
+    id: CHART-79af38d5
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-1
+    meta:
+      chartId: 54
+      uuid: 79af38d5-52cf-4046-8f8a-07cb218ebdb3
+      width: 3
+      height: 28
+      sliceName: Warmest city now
+  CHART-de6c9ffb:
+    type: CHART
+    id: CHART-de6c9ffb
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-1
+    meta:
+      chartId: 55
+      uuid: de6c9ffb-09a7-47b9-9674-2c8d9567a52a
+      width: 3
+      height: 28
+      sliceName: Coldest city now
+  ROW-now-2:
+    type: ROW
+    id: ROW-now-2
+    children:
+    - CHART-90528938
+    - CHART-8f63e8da
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-90528938:
+    type: CHART
+    id: CHART-90528938
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-2
+    meta:
+      chartId: 56
+      uuid: 90528938-414f-420c-8470-59b235de9b2c
+      width: 6
+      height: 92
+      sliceName: "World map \xB7 average temperature by country"
+  CHART-8f63e8da:
+    type: CHART
+    id: CHART-8f63e8da
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-2
+    meta:
+      chartId: 57
+      uuid: 8f63e8da-0b91-49af-90a4-09a51965b577
+      width: 6
+      height: 92
+      sliceName: "Cities map \xB7 current temperature band"
+  ROW-now-3:
+    type: ROW
+    id: ROW-now-3
+    children:
+    - CHART-b8fd80f6
+    - CHART-b3f038b7
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-b8fd80f6:
+    type: CHART
+    id: CHART-b8fd80f6
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-3
+    meta:
+      chartId: 58
+      uuid: b8fd80f6-cbe3-442c-ace3-d65e18503231
+      width: 8
+      height: 80
+      sliceName: Current conditions by city
+  CHART-b3f038b7:
+    type: CHART
+    id: CHART-b3f038b7
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-3
+    meta:
+      chartId: 59
+      uuid: b3f038b7-4751-42c6-80e2-0ddbf6a41107
+      width: 4
+      height: 80
+      sliceName: "Temperature vs RealFeel\xAE now"
+  ROW-now-4:
+    type: ROW
+    id: ROW-now-4
+    children:
+    - CHART-34e43d2c
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-34e43d2c:
+    type: CHART
+    id: CHART-34e43d2c
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-now
+    - ROW-now-4
+    meta:
+      chartId: 60
+      uuid: 34e43d2c-2354-4069-a01a-17bf71e3092d
+      width: 12
+      height: 60
+      sliceName: "Last 7 days \xB7 hourly temperature by country (daily feed)"
+  TAB-trends:
+    type: TAB
+    id: TAB-trends
+    children:
+    - ROW-trends-0
+    - ROW-trends-1
+    - ROW-trends-2
+    - ROW-trends-3
+    - ROW-trends-4
+    - ROW-trends-5
+    parents:
+    - ROOT_ID
+    - TABS-main
+    meta:
+      text: Trends & climate
+      defaultText: Tab title
+      placeholder: Tab title
+  ROW-trends-0:
+    type: ROW
+    id: ROW-trends-0
+    children:
+    - MARKDOWN-trends
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  MARKDOWN-trends:
+    type: MARKDOWN
+    id: MARKDOWN-trends
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-0
+    meta:
+      width: 12
+      height: 18
+      code: "### Trends and climate patterns\nHistorical hourly observations (Aug\
+        \ 2023 \u2013 Oct 2024 backfill + every daily load). Narrow the period with\
+        \ the\n**Date range** filter. Weekly grain smooths day-to-day noise; the heatmap\
+        \ uses each city's own local time.\n"
+  ROW-trends-1:
+    type: ROW
+    id: ROW-trends-1
+    children:
+    - CHART-903c6857
+    - CHART-5a27795c
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-903c6857:
+    type: CHART
+    id: CHART-903c6857
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-1
+    meta:
+      chartId: 61
+      uuid: 903c6857-2712-47ca-b8e8-b91c5dabbed8
+      width: 6
+      height: 64
+      sliceName: Weekly average temperature by country
+  CHART-5a27795c:
+    type: CHART
+    id: CHART-5a27795c
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-1
+    meta:
+      chartId: 62
+      uuid: 5a27795c-da05-435c-a137-1a012a76845f
+      width: 6
+      height: 64
+      sliceName: "Temperature envelope \xB7 weekly min / mean / max"
+  ROW-trends-2:
+    type: ROW
+    id: ROW-trends-2
+    children:
+    - CHART-f7c7cc31
+    - CHART-c8e0e548
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-f7c7cc31:
+    type: CHART
+    id: CHART-f7c7cc31
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-2
+    meta:
+      chartId: 63
+      uuid: f7c7cc31-2343-474a-a80f-674cf985efb0
+      width: 7
+      height: 90
+      sliceName: "Daily cycle \xB7 average temperature by local hour"
+  CHART-c8e0e548:
+    type: CHART
+    id: CHART-c8e0e548
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-2
+    meta:
+      chartId: 65
+      uuid: c8e0e548-b8e6-4d0d-abc0-0b75ba0d5696
+      width: 5
+      height: 90
+      sliceName: "Climate profile \xB7 temperature vs humidity"
+  ROW-trends-3:
+    type: ROW
+    id: ROW-trends-3
+    children:
+    - CHART-78f4360a
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-78f4360a:
+    type: CHART
+    id: CHART-78f4360a
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-3
+    meta:
+      chartId: 64
+      uuid: 78f4360a-c84e-40be-9568-9ce665fcab2a
+      width: 12
+      height: 70
+      sliceName: Distribution of daily mean temperature by city
+  ROW-trends-4:
+    type: ROW
+    id: ROW-trends-4
+    children:
+    - CHART-b24da8da
+    - CHART-f7f315e1
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-b24da8da:
+    type: CHART
+    id: CHART-b24da8da
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-4
+    meta:
+      chartId: 66
+      uuid: b24da8da-cac2-4b93-bc46-cd2b3644a603
+      width: 6
+      height: 64
+      sliceName: Hours with precipitation per month
+  CHART-f7f315e1:
+    type: CHART
+    id: CHART-f7f315e1
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-4
+    meta:
+      chartId: 67
+      uuid: f7f315e1-44b0-4ddc-aeee-5c762a9c8457
+      width: 6
+      height: 64
+      sliceName: Weather conditions mix (share of observed hours)
+  ROW-trends-5:
+    type: ROW
+    id: ROW-trends-5
+    children:
+    - CHART-8c4b77ce
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-8c4b77ce:
+    type: CHART
+    id: CHART-8c4b77ce
+    children: []
+    parents:
+    - ROOT_ID
+    - TABS-main
+    - TAB-trends
+    - ROW-trends-5
+    meta:
+      chartId: 68
+      uuid: 8c4b77ce-307e-4b2e-ba8d-a1f09844f2dc
+      width: 12
+      height: 60
+      sliceName: Average daily maximum UV index by city
+metadata:
+  color_scheme: supersetColors
+  label_colors:
+    "1. Freezing (< 0 \xB0C)": '#1F4E99'
+    "2. Cold (0-10 \xB0C)": '#3D8BD9'
+    "3. Cool (10-18 \xB0C)": '#5BC0BE'
+    "4. Mild (18-25 \xB0C)": '#F2C14E'
+    "5. Warm (25-32 \xB0C)": '#F08A3C'
+    "6. Hot (>= 32 \xB0C)": '#D7263D'
+    "Maximum (\xB0C)": '#D7263D'
+    "Mean (\xB0C)": '#F08A3C'
+    "Minimum (\xB0C)": '#3D8BD9'
+    Clear & sunny: '#F2C14E'
+    Partly cloudy: '#9BB7D4'
+    Cloudy: '#7A869A'
+    Rain & drizzle: '#3D8BD9'
+    Thunderstorms: '#5B3E96'
+    Fog, mist & haze: '#B9B9B9'
+    Snow & ice: '#BFE6FF'
+    Other: '#E0E0E0'
+  refresh_frequency: 3600
+  timed_refresh_immune_slices: []
+  cross_filters_enabled: true
+  expanded_slices: {}
+  native_filter_configuration:
+  - id: NATIVE_FILTER-country
+    name: Country
+    filterType: filter_select
+    type: NATIVE_FILTER
+    targets:
+    - column:
+        name: country
+      datasetUuid: 1d27cc25-fb58-43bd-acf2-c57013a712f6
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    description: Filter every chart by country.
+  - id: NATIVE_FILTER-city
+    name: City
+    filterType: filter_select
+    type: NATIVE_FILTER
+    targets:
+    - column:
+        name: city_name
+      datasetUuid: 1d27cc25-fb58-43bd-acf2-c57013a712f6
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds:
+    - NATIVE_FILTER-country
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    description: Filter every chart by city.
+  - id: NATIVE_FILTER-period
+    name: Date range
+    filterType: filter_time
+    type: NATIVE_FILTER
+    targets:
+    - {}
+    controlValues:
+      enableEmptyFilter: false
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded:
+      - 52
+      - 53
+      - 54
+      - 55
+      - 56
+      - 57
+      - 58
+      - 59
+      - 60
+    description: Period of the historical charts (Trends & climate tab).
+  chart_configuration: {}
+  shared_label_colors: []
+  map_label_colors: {}
+  color_scheme_domain: []
+theme_uuid: null
+version: 1.0.0

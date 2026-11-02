@@ -1,0 +1,18 @@
+country_iso_alpha_2_str,country_iso_alpha_3_str,country_name_str,city_name_str,city_accuweather_id_str,tz_str,utc_int,latitude_flt,longitude_flt,city_folder_str,active_bit
+AR,ARG,Argentina,Buenos Aires,7894,America/Argentina/Buenos_Aires,-3,-34.608,-58.437,buenos_aires,TRUE
+AR,ARG,Argentina,Córdoba,8869,America/Argentina/Cordoba,-3,-31.417,-64.183,cordoba,TRUE
+AR,ARG,Argentina,Rosario,11222,America/Argentina/Cordoba,-3,-32.959,-60.662,rosario,TRUE
+BR,BRA,Brasil,São Paulo,45881,America/Sao_Paulo,-3,-23.567,-46.57,sao_paulo,TRUE
+BR,BRA,Brasil,Rio de Janeiro,45449,America/Sao_Paulo,-3,-22.877,-43.228,rio_de_janeiro,TRUE
+BR,BRA,Brasil,Brasília,43348,America/Sao_Paulo,-3,-15.794,-47.888,brasilia,TRUE
+CL,CHL,Chile,Puente Alto,56195,America/Santiago,-3,-33.575,-70.568,puente_alto,TRUE
+CL,CHL,Chile,Santiago,60449,America/Santiago,-3,-33.446,-70.659,santiago,TRUE
+CO,COL,Colombia,Bogotá,107487,America/Bogota,-5,4.628,-74.077,bogota,TRUE
+CO,COL,Colombia,Medellín,107060,America/Bogota,-5,6.244,-75.574,medellin,TRUE
+CO,COL,Colombia,Cali,111732,America/Bogota,-5,3.457,-76.522,cali,TRUE
+MX,MEX,México,Ciudad de México,242560,America/Mexico_City,-6,19.433,-99.133,ciudad_de_mexico,TRUE
+MX,MEX,México,Tijuana,241912,America/Tijuana,-7,32.532,-117.019,tijuana,TRUE
+MX,MEX,México,Ecatepec de Morelos,233934,America/Mexico_City,-6,19.599,-99.049,ecatepec_de_morelos,TRUE
+PE,PER,Perú,Lima,264120,America/Lima,-5,-12.082,-77.045,lima,TRUE
+PE,PER,Perú,Callao,264119,America/Lima,-5,-12.052,-77.128,callao,TRUE
+PE,PER,Perú,Arequipa,256930,America/Lima,-5,-16.398,-71.523,arequipa,TRUE

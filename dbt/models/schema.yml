@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: historical_condition_raw_data
+    description: >
+      HISTORICAL_CONDITION_RAW_DATA from accuweather.sql. One row per observation; PAYLOAD (JSONB) is the
+      AccuWeather JSON plus the location fields added at ingestion. Incremental and append-only.
+    columns:
+      - name: filename_str
+        description: MinIO object key of the file that delivered the observation.
+        data_tests: [not_null]
+      - name: payload
+        data_tests: [not_null]
+      - name: data_ingress_date_dte
+        description: When the file entered the warehouse (original Snowflake value for historical files).
+        data_tests: [not_null]
+
+  - name: historical_condition_raw_data_clone
+    description: HISTORICAL_CONDITION_RAW_DATA_CLONE from accuweather.sql, loaded from its Snowflake export.
+
+  - name: historical_condition_observations
+    description: Typed and de-duplicated observations (one row per city and observation time).
+    columns:
+      - name: accuweather_id
+        data_tests: [not_null]
+      - name: local_obs_datetime
+        data_tests: [not_null]
+      - name: latitude
+        data_tests: [not_null]
+      - name: longitude
+        data_tests: [not_null]
+
+  - name: historical_condition_data_view
+    description: >
+      HISTORICAL_CONDITION_DATA_VIEW from accuweather.sql: hourly weather per city with latitude and
+      longitude. Refreshed every day by the Dagster schedule; Superset's main dataset.
+    columns:
+      - name: accuweather_id
+        description: AccuWeather location key.
+      - name: local_obs_datetime
+        description: Observation time (timestamptz, original local offset preserved in the instant).
+      - name: temp_c
+        description: Air temperature in °C.
+      - name: real_feel_temp_c
+        description: AccuWeather RealFeel® temperature in °C.
+
+  - name: city_latest_conditions
+    description: Latest observation per city with its last-24-hour summary (maps and current conditions).
+    columns:
+      - name: accuweather_id
+        data_tests: [not_null, unique]
+      - name: temperature_band
+        data_tests: [not_null]
+
+  - name: city_daily_weather
+    description: Daily summary per city and local date.
+
+  - name: weather_observations
+    description: Hourly observations with local date and hour, for hour-of-day and seasonal analysis.

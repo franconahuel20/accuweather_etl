@@ -1,0 +1,37 @@
+slice_name: "Last 7 days \xB7 hourly temperature by country (daily feed)"
+description: Straight from HISTORICAL_CONDITION_DATA_VIEW, refreshed every day by
+  Dagster.
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_line
+params:
+  datasource: 1__table
+  viz_type: echarts_timeseries_line
+  adhoc_filters: []
+  time_range: Last week
+  x_axis: local_obs_datetime
+  time_grain_sqla: PT1H
+  metrics:
+  - expressionType: SQL
+    sqlExpression: ROUND(AVG(temp_c), 1)
+    label: "Temperature (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_b19e14ee1f5d
+  groupby:
+  - country
+  granularity_sqla: local_obs_datetime
+  row_limit: 10000
+  show_legend: true
+  legendOrientation: top
+  rich_tooltip: true
+  y_axis_format: .1f
+  x_axis_time_format: smart_date
+  markerEnabled: false
+  zoomable: true
+  color_scheme: supersetColors
+  truncateYAxis: true
+query_context: null
+cache_timeout: null
+uuid: 34e43d2c-2354-4069-a01a-17bf71e3092d
+version: 1.0.0
+dataset_uuid: c3731b9c-3e8c-4bac-8eca-25d610e12c89

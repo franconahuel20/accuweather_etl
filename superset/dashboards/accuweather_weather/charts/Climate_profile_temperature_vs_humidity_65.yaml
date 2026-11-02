@@ -1,0 +1,46 @@
+slice_name: "Climate profile \xB7 temperature vs humidity"
+description: 'Each bubble is a city: warm/humid cities sit top-right; bigger bubbles
+  = larger day-night swings.'
+certified_by: null
+certification_details: null
+viz_type: bubble_v2
+params:
+  datasource: 3__table
+  viz_type: bubble_v2
+  adhoc_filters: []
+  time_range: No filter
+  entity: city_label
+  series: country
+  x:
+    expressionType: SQL
+    sqlExpression: ROUND(AVG(temp_avg_c), 1)
+    label: "Avg temperature (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_f3fdb225cbfd
+  y:
+    expressionType: SQL
+    sqlExpression: ROUND(AVG(humidity_avg), 1)
+    label: Avg relative humidity (%)
+    hasCustomLabel: true
+    optionName: metric_e588ed47b5e8
+  size:
+    expressionType: SQL
+    sqlExpression: ROUND(AVG(temp_range_c), 1)
+    label: "Avg daily range (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_0b76fda949aa
+  max_bubble_size: '12'
+  row_limit: 1000
+  x_axis_label: "Average temperature (\xB0C)"
+  y_axis_label: Average relative humidity (%)
+  xAxisFormat: .1f
+  y_axis_format: .0f
+  show_legend: true
+  legendOrientation: top
+  color_scheme: supersetColors
+  opacity: 0.6
+query_context: null
+cache_timeout: null
+uuid: c8e0e548-b8e6-4d0d-abc0-0b75ba0d5696
+version: 1.0.0
+dataset_uuid: 855c0677-1aee-4003-bdf6-545842c988fb

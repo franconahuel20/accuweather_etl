@@ -1,0 +1,38 @@
+slice_name: "Temperature vs RealFeel\xAE now"
+description: Gap between measured and perceived temperature (wind, humidity, sun).
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  datasource: 2__table
+  viz_type: echarts_timeseries_bar
+  adhoc_filters: []
+  time_range: No filter
+  x_axis: city_label
+  metrics:
+  - expressionType: SQL
+    sqlExpression: MAX(temp_c)
+    label: "Temperature (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_0ba138cb5476
+  - expressionType: SQL
+    sqlExpression: MAX(real_feel_temp_c)
+    label: "RealFeel (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_8ac32d48ee87
+  groupby: []
+  orientation: horizontal
+  x_axis_sort: "Temperature (\xB0C)"
+  x_axis_sort_asc: true
+  row_limit: 50
+  show_legend: true
+  legendOrientation: top
+  y_axis_format: .1f
+  show_value: false
+  rich_tooltip: true
+  color_scheme: supersetColors
+query_context: null
+cache_timeout: null
+uuid: b3f038b7-4751-42c6-80e2-0ddbf6a41107
+version: 1.0.0
+dataset_uuid: 1d27cc25-fb58-43bd-acf2-c57013a712f6

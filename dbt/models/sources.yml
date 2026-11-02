@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: landing
+    schema: landing
+    description: Raw data copied as-is into PostgreSQL by Dagster. dbt never writes here.
+    tables:
+      - name: accuweather_raw_files
+        description: >
+          One row per raw JSON file stored in MinIO (AccuWeather API responses and the historical files
+          rebuilt from the Snowflake export). `payload` is the JSON array of observations of the file.
+        columns:
+          - name: object_key
+            description: MinIO object key, the same value as FILENAME_STR in the original pipeline.
+            data_tests: [not_null, unique]
+          - name: payload
+            data_tests: [not_null]
+          - name: data_ingress_date_dte
+            data_tests: [not_null]
+      - name: historical_condition_raw_data_clone_export
+        description: Snowflake export of HISTORICAL_CONDITION_RAW_DATA_CLONE (point-in-time backup copy).
