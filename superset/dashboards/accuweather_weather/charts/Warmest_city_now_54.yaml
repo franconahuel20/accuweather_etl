@@ -1,0 +1,27 @@
+slice_name: Warmest city now
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 2__table
+  viz_type: big_number_total
+  adhoc_filters: []
+  time_range: No filter
+  metric:
+    expressionType: SQL
+    sqlExpression: MAX(temp_c)
+    label: "Max \xB0C"
+    hasCustomLabel: true
+    optionName: metric_1fe2c54bd9d7
+  subheader: "\xB0C, highest current temperature"
+  subtitle: "\xB0C, highest current temperature"
+  y_axis_format: .1f
+  header_font_size: 0.4
+  subheader_font_size: 0.15
+  subtitle_font_size: 0.15
+query_context: null
+cache_timeout: null
+uuid: 79af38d5-52cf-4046-8f8a-07cb218ebdb3
+version: 1.0.0
+dataset_uuid: 1d27cc25-fb58-43bd-acf2-c57013a712f6

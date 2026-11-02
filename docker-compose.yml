@@ -1,0 +1,204 @@
+# AccuWeather ETL: `docker compose up -d` starts the whole platform.
+#   AccuWeather API -> Dagster -> MinIO (raw JSON) -> PostgreSQL (landing) -> dbt -> Superset
+# Credentials and ports come from .env (copy .env.example and fill in ACCUWEATHER_API_KEY).
+name: accuweather_etl
+
+x-warehouse-env: &warehouse-env
+  WAREHOUSE_HOST: postgres
+  WAREHOUSE_PORT: "5432"
+  WAREHOUSE_DB: ${WAREHOUSE_DB:-weather}
+  WAREHOUSE_USER: ${WAREHOUSE_USER:-etl}
+  WAREHOUSE_PASSWORD: ${WAREHOUSE_PASSWORD:?Set WAREHOUSE_PASSWORD in .env}
+
+x-dagster-env: &dagster-env
+  <<: *warehouse-env
+  DAGSTER_PG_HOST: postgres
+  DAGSTER_PG_DB: ${DAGSTER_PG_DB:-dagster}
+  DAGSTER_PG_USER: ${DAGSTER_PG_USER:-dagster}
+  DAGSTER_PG_PASSWORD: ${DAGSTER_PG_PASSWORD:?Set DAGSTER_PG_PASSWORD in .env}
+  MINIO_ENDPOINT: http://minio:9000
+  MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+  MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?Set MINIO_ROOT_PASSWORD in .env}
+  MINIO_BUCKET: ${MINIO_BUCKET:-accuweather-raw}
+  ACCUWEATHER_API_KEY: ${ACCUWEATHER_API_KEY:-}
+  ACCUWEATHER_BASE_URL: ${ACCUWEATHER_BASE_URL:-https://dataservice.accuweather.com}
+  PIPELINE_SCHEDULE_CRON: "${PIPELINE_SCHEDULE_CRON:-30 8 * * *}"
+  PIPELINE_SCHEDULE_TIMEZONE: ${PIPELINE_SCHEDULE_TIMEZONE:-UTC}
+  HISTORICAL_DATA_PATH: /opt/accuweather/historical
+
+x-dagster-service: &dagster-service
+  image: accuweather-etl/dagster:1.0.0
+  build:
+    context: .
+    dockerfile: dagster/Dockerfile
+  environment: *dagster-env
+  volumes:
+    - dagster_storage:/opt/dagster/dagster_home/storage
+    # Optional Snowflake exports used for the one-time historical backfill (read-only).
+    - ${HISTORICAL_DATA_DIR:-./data/historical}:/opt/accuweather/historical:ro
+  restart: unless-stopped
+
+services:
+  postgres:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_SUPERUSER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD:?Set POSTGRES_SUPERUSER_PASSWORD in .env}
+      POSTGRES_DB: postgres
+      # Read by postgres/init/01-init-databases.sh on the first start only.
+      WAREHOUSE_DB: ${WAREHOUSE_DB:-weather}
+      WAREHOUSE_USER: ${WAREHOUSE_USER:-etl}
+      WAREHOUSE_PASSWORD: ${WAREHOUSE_PASSWORD}
+      BI_READER_USER: ${BI_READER_USER:-bi_reader}
+      BI_READER_PASSWORD: ${BI_READER_PASSWORD:?Set BI_READER_PASSWORD in .env}
+      DAGSTER_PG_DB: ${DAGSTER_PG_DB:-dagster}
+      DAGSTER_PG_USER: ${DAGSTER_PG_USER:-dagster}
+      DAGSTER_PG_PASSWORD: ${DAGSTER_PG_PASSWORD}
+      SUPERSET_PG_DB: ${SUPERSET_PG_DB:-superset}
+      SUPERSET_PG_USER: ${SUPERSET_PG_USER:-superset}
+      SUPERSET_PG_PASSWORD: ${SUPERSET_PG_PASSWORD:?Set SUPERSET_PG_PASSWORD in .env}
+    command: ["postgres", "-c", "shared_buffers=256MB", "-c", "max_wal_size=2GB", "-c", "work_mem=32MB"]
+    ports:
+      - "${HOST_BIND_IP:-127.0.0.1}:${POSTGRES_PORT:-5435}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  minio:
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "${HOST_BIND_IP:-127.0.0.1}:${MINIO_API_PORT:-9010}:9000"
+      - "${HOST_BIND_IP:-127.0.0.1}:${MINIO_CONSOLE_PORT:-9011}:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  minio-init:
+    image: pgsty/mc:RELEASE.2026-10-18T00-00-00Z
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_BUCKET: ${MINIO_BUCKET:-accuweather-raw}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - >-
+        mc alias set local http://minio:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}"
+        && mc mb --ignore-existing "local/$${MINIO_BUCKET}"
+        && mc version enable "local/$${MINIO_BUCKET}"
+    depends_on:
+      minio:
+        condition: service_healthy
+    restart: "no"
+
+  dagster-code:
+    <<: *dagster-service
+    command: ["dagster", "api", "grpc", "--host", "0.0.0.0", "--port", "4000", "--module-name", "accuweather_pipeline.definitions"]
+    healthcheck:
+      test: ["CMD", "dagster", "api", "grpc-health-check", "--port", "4000"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+
+  dagster-webserver:
+    <<: *dagster-service
+    # Creates/upgrades the Dagster storage schema before serving the UI.
+    command:
+      - sh
+      - -c
+      - dagster instance migrate && exec dagster-webserver --host 0.0.0.0 --port 3000 --workspace /opt/dagster/dagster_home/workspace.yaml
+    ports:
+      - "${HOST_BIND_IP:-127.0.0.1}:${DAGSTER_PORT:-3001}:3000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:3000/server_info', timeout=5)"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      dagster-code:
+        condition: service_healthy
+
+  dagster-daemon:
+    <<: *dagster-service
+    # Runs the daily schedule and launches queued runs.
+    command: ["dagster-daemon", "run", "--workspace", "/opt/dagster/dagster_home/workspace.yaml"]
+    depends_on:
+      dagster-webserver:
+        condition: service_healthy
+
+  pipeline-bootstrap:
+    <<: *dagster-service
+    # One-shot run on every `docker compose up -d`: seeds the locations, backfills the historical
+    # exports (once), fetches today's AccuWeather data (once per day) and builds the dbt models.
+    # Every step is idempotent, so restarting the stack never duplicates data or wastes API calls.
+    command: ["sh", "-c", "if [ \"$${BOOTSTRAP_ON_STARTUP}\" = \"true\" ]; then exec dagster job execute -m accuweather_pipeline.definitions -j bootstrap_job; else echo 'Bootstrap disabled (BOOTSTRAP_ON_STARTUP=false)'; fi"]
+    environment:
+      <<: *dagster-env
+      BOOTSTRAP_ON_STARTUP: ${BOOTSTRAP_ON_STARTUP:-true}
+    depends_on:
+      dagster-webserver:
+        condition: service_healthy
+    restart: "no"
+
+  superset:
+    image: accuweather-etl/superset:6.0.0
+    build:
+      context: .
+      dockerfile: superset/Dockerfile
+    environment:
+      SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY:?Set SUPERSET_SECRET_KEY in .env}
+      SUPERSET_ADMIN_USERNAME: ${SUPERSET_ADMIN_USERNAME:-admin}
+      SUPERSET_ADMIN_PASSWORD: ${SUPERSET_ADMIN_PASSWORD:?Set SUPERSET_ADMIN_PASSWORD in .env}
+      SUPERSET_PG_HOST: postgres
+      SUPERSET_PG_DB: ${SUPERSET_PG_DB:-superset}
+      SUPERSET_PG_USER: ${SUPERSET_PG_USER:-superset}
+      SUPERSET_PG_PASSWORD: ${SUPERSET_PG_PASSWORD}
+      WAREHOUSE_HOST: postgres
+      WAREHOUSE_PORT: "5432"
+      WAREHOUSE_DB: ${WAREHOUSE_DB:-weather}
+      BI_READER_USER: ${BI_READER_USER:-bi_reader}
+      BI_READER_PASSWORD: ${BI_READER_PASSWORD}
+      SUPERSET_FORCE_REIMPORT: ${SUPERSET_FORCE_REIMPORT:-false}
+      MAPBOX_API_KEY: ${MAPBOX_API_KEY:-}
+    ports:
+      - "${HOST_BIND_IP:-127.0.0.1}:${SUPERSET_PORT:-8089}:8088"
+    volumes:
+      # Superset home (uploads, logs, local state); its metadata lives in the PostgreSQL volume.
+      - superset_home:/app/superset_home
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8088/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 40
+      start_period: 90s
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  minio_data:
+  dagster_storage:
+  superset_home:

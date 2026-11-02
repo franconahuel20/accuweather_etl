@@ -1,0 +1,44 @@
+slice_name: "Cities map \xB7 current temperature band"
+description: Each city at its latitude/longitude, coloured by its current temperature
+  band.
+certified_by: null
+certification_details: null
+viz_type: deck_scatter
+params:
+  datasource: 2__table
+  viz_type: deck_scatter
+  adhoc_filters: []
+  time_range: No filter
+  spatial:
+    type: latlong
+    latCol: latitude
+    lonCol: longitude
+  mapbox_style: tile://https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}
+  viewport:
+    longitude: -78.0
+    latitude: -8.0
+    zoom: 2.1
+    bearing: 0
+    pitch: 0
+  autozoom: true
+  point_radius_fixed:
+    type: fix
+    value: '60'
+  point_unit: radius_km
+  min_radius: 7
+  max_radius: 40
+  multiplier: 1
+  dimension: temperature_band
+  color_scheme: supersetColors
+  color_picker:
+    r: 215
+    g: 38
+    b: 61
+    a: 1
+  legend_position: tr
+  row_limit: 5000
+query_context: null
+cache_timeout: null
+uuid: 8f63e8da-0b91-49af-90a4-09a51965b577
+version: 1.0.0
+dataset_uuid: 1d27cc25-fb58-43bd-acf2-c57013a712f6

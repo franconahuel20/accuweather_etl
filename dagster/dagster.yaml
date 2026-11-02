@@ -1,0 +1,42 @@
+# Dagster instance shared by the code server, webserver, daemon and bootstrap run.
+storage:
+  postgres:
+    postgres_db:
+      hostname:
+        env: DAGSTER_PG_HOST
+      db_name:
+        env: DAGSTER_PG_DB
+      username:
+        env: DAGSTER_PG_USER
+      password:
+        env: DAGSTER_PG_PASSWORD
+      port: 5432
+
+# Runs triggered by the schedule or the UI are queued and launched one at a time,
+# so two runs never load the same files concurrently.
+run_coordinator:
+  module: dagster.core.run_coordinator
+  class: QueuedRunCoordinator
+  config:
+    max_concurrent_runs: 1
+
+# Runs execute as subprocesses of the code server (dagster-code container).
+run_launcher:
+  module: dagster.core.launcher
+  class: DefaultRunLauncher
+
+# Kept on the shared `dagster_storage` volume so the webserver can show step logs.
+compute_logs:
+  module: dagster.core.storage.local_compute_log_manager
+  class: LocalComputeLogManager
+  config:
+    base_dir: /opt/dagster/dagster_home/storage/compute_logs
+
+local_artifact_storage:
+  module: dagster.core.storage.root
+  class: LocalArtifactStorage
+  config:
+    base_dir: /opt/dagster/dagster_home/storage
+
+telemetry:
+  enabled: false

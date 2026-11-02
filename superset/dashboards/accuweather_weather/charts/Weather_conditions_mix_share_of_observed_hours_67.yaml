@@ -1,0 +1,36 @@
+slice_name: Weather conditions mix (share of observed hours)
+description: AccuWeather's ~35 condition phrases grouped into comparable categories.
+certified_by: null
+certification_details: null
+viz_type: pie
+params:
+  datasource: 4__table
+  viz_type: pie
+  adhoc_filters: []
+  time_range: No filter
+  groupby:
+  - weather_group
+  metric:
+    expressionType: SQL
+    sqlExpression: COUNT(*)
+    label: Hours
+    hasCustomLabel: true
+    optionName: metric_bdea760e3023
+  donut: true
+  show_labels: true
+  labels_outside: true
+  label_type: percent
+  row_limit: 20
+  sort_by_metric: true
+  show_legend: true
+  legendOrientation: right
+  innerRadius: 40
+  outerRadius: 72
+  show_total: true
+  number_format: ',d'
+  color_scheme: supersetColors
+query_context: null
+cache_timeout: null
+uuid: f7f315e1-44b0-4ddc-aeee-5c762a9c8457
+version: 1.0.0
+dataset_uuid: 832247d5-979c-4564-8d63-8a84f6338870

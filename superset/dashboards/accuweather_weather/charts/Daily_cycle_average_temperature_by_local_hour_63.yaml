@@ -1,0 +1,39 @@
+slice_name: "Daily cycle \xB7 average temperature by local hour"
+description: When each city is warmest and coldest, in its own local time.
+certified_by: null
+certification_details: null
+viz_type: heatmap_v2
+params:
+  datasource: 4__table
+  viz_type: heatmap_v2
+  adhoc_filters: []
+  time_range: No filter
+  x_axis: local_hour
+  groupby: city_label
+  metric:
+    expressionType: SQL
+    sqlExpression: ROUND(AVG(temp_c), 1)
+    label: "Avg temperature (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_e543ad6405a4
+  linear_color_scheme: schemeYlOrRd
+  sort_x_axis: alpha_asc
+  sort_y_axis: alpha_asc
+  normalize_across: heatmap
+  legend_type: continuous
+  show_values: false
+  show_percentage: false
+  row_limit: 10000
+  y_axis_format: .1f
+  xscale_interval: -1
+  yscale_interval: -1
+  left_margin: auto
+  bottom_margin: auto
+  value_bounds:
+  - null
+  - null
+query_context: null
+cache_timeout: null
+uuid: f7c7cc31-2343-474a-a80f-674cf985efb0
+version: 1.0.0
+dataset_uuid: 832247d5-979c-4564-8d63-8a84f6338870

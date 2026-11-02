@@ -1,0 +1,27 @@
+slice_name: Coldest city now
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 2__table
+  viz_type: big_number_total
+  adhoc_filters: []
+  time_range: No filter
+  metric:
+    expressionType: SQL
+    sqlExpression: MIN(temp_c)
+    label: "Min \xB0C"
+    hasCustomLabel: true
+    optionName: metric_b1f892e5e05d
+  subheader: "\xB0C, lowest current temperature"
+  subtitle: "\xB0C, lowest current temperature"
+  y_axis_format: .1f
+  header_font_size: 0.4
+  subheader_font_size: 0.15
+  subtitle_font_size: 0.15
+query_context: null
+cache_timeout: null
+uuid: de6c9ffb-09a7-47b9-9674-2c8d9567a52a
+version: 1.0.0
+dataset_uuid: 1d27cc25-fb58-43bd-acf2-c57013a712f6

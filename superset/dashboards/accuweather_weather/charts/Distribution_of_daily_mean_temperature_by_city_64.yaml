@@ -1,0 +1,31 @@
+slice_name: Distribution of daily mean temperature by city
+description: Box = middle 50% of days; whiskers = Tukey (1.5 IQR); dots = unusual
+  days.
+certified_by: null
+certification_details: null
+viz_type: box_plot
+params:
+  datasource: 3__table
+  viz_type: box_plot
+  adhoc_filters: []
+  time_range: No filter
+  columns:
+  - local_date
+  groupby:
+  - city_label
+  metrics:
+  - expressionType: SQL
+    sqlExpression: MAX(temp_avg_c)
+    label: "Daily mean (\xB0C)"
+    hasCustomLabel: true
+    optionName: metric_3f69e3c0521a
+  whiskerOptions: Tukey
+  row_limit: 100000
+  x_ticks_layout: "45\xB0"
+  number_format: .1f
+  color_scheme: supersetColors
+query_context: null
+cache_timeout: null
+uuid: 78f4360a-c84e-40be-9568-9ce665fcab2a
+version: 1.0.0
+dataset_uuid: 855c0677-1aee-4003-bdf6-545842c988fb

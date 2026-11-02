@@ -1,0 +1,33 @@
+slice_name: Average daily maximum UV index by city
+description: UV index 0-2 low, 3-5 moderate, 6-7 high, 8-10 very high, 11+ extreme.
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  datasource: 3__table
+  viz_type: echarts_timeseries_bar
+  adhoc_filters: []
+  time_range: No filter
+  x_axis: city_label
+  metrics:
+  - expressionType: SQL
+    sqlExpression: ROUND(AVG(uv_index_max), 1)
+    label: Avg daily max UV
+    hasCustomLabel: true
+    optionName: metric_950026f4edf7
+  groupby: []
+  orientation: vertical
+  x_axis_sort: Avg daily max UV
+  x_axis_sort_asc: false
+  row_limit: 50
+  show_legend: false
+  y_axis_format: .1f
+  show_value: true
+  rich_tooltip: true
+  color_scheme: supersetColors
+  xAxisLabelRotation: 30
+query_context: null
+cache_timeout: null
+uuid: 8c4b77ce-307e-4b2e-ba8d-a1f09844f2dc
+version: 1.0.0
+dataset_uuid: 855c0677-1aee-4003-bdf6-545842c988fb
